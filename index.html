@@ -3,32 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <title>Valentine?</title>
+
   <style>
     body {
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #ff5f9e, #ff9a9e, #fad0c4);
-  background-size: 400% 400%;
-  animation: gradientMove 12s ease infinite;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  overflow: hidden;
-}
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ff5f9e, #ff9a9e, #fad0c4);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
 
-@keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Floating hearts animation */
+    @keyframes floatUp {
+      from { transform: translateY(0); }
+      to { transform: translateY(-120vh); }
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      animation-name: floatUp;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      pointer-events: none;
+    }
+
     .card {
       background: white;
       padding: 40px;
       border-radius: 25px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+      box-shadow: 0 0 30px rgba(230, 57, 70, 0.35),
+                  0 15px 40px rgba(0,0,0,0.2);
       width: 420px;
       position: relative;
+      z-index: 10;
     }
 
     h1 {
@@ -76,7 +96,11 @@
     }
   </style>
 </head>
+
 <body>
+
+  <!-- Floating hearts container -->
+  <div id="hearts"></div>
 
   <div class="card" id="card">
     <h1>Stephany,<br>will you be my Valentine? 💖</h1>
@@ -93,41 +117,49 @@
     const noBtn = document.getElementById("noBtn");
     const card = document.getElementById("card");
 
+    // No button runs away
     noBtn.addEventListener("mouseenter", () => {
       const cardRect = card.getBoundingClientRect();
-
       const maxX = cardRect.width - noBtn.offsetWidth - 20;
       const maxY = cardRect.height - noBtn.offsetHeight - 20;
 
-      const randomX = Math.random() * maxX;
-      const randomY = Math.random() * maxY;
-
-      noBtn.style.left = randomX + "px";
-      noBtn.style.top = randomY + "px";
+      noBtn.style.left = Math.random() * maxX + "px";
+      noBtn.style.top = Math.random() * maxY + "px";
     });
 
+    // Floating hearts generation
+    const heartCount = 25;
+
+    for (let i = 0; i < heartCount; i++) {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = Math.random() * 20 + 14 + "px";
+      heart.style.opacity = Math.random();
+      heart.style.animationDuration = (Math.random() * 5 + 6) + "s";
+      document.body.appendChild(heart);
+    }
+
+    // Yes button action
     function yesClicked() {
       card.innerHTML = `
-        <h1>Yay!!! 🥰❤️<br>Happy Valentine’s Day</h1>
-        <img src="us1.jpg" alt="Us together">
+        <p style="
+          font-size: 16px;
+          line-height: 1.6;
+          color: #444;
+          margin-bottom: 20px;
+        ">
+          Your good heart is in good hands!!<br><br>
+          You were born to be adored by me. Among billions of faces in this world,
+          it's only your eyes I will ever search for.<br><br>
+          You are my mischief wrapped in kindness, love, devotion, beauty,
+          and soft smooth curves.
+        </p>
+        <img src="us1.jpeg" alt="Us together">
       `;
     }
   </script>
-<script>
-  const heartCount = 25;
-
-  for (let i = 0; i < heartCount; i++) {
-    const heart = document.createElement("div");
-    heart.textContent = "❤️";
-    heart.style.position = "absolute";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.bottom = "-20px";
-    heart.style.fontSize = Math.random() * 20 + 14 + "px";
-    heart.style.opacity = Math.random();
-    heart.style.animation = `floatUp ${Math.random() * 5 + 6}s linear infinite`;
-    document.body.appendChild(heart);
-  }
-</script>
 
 </body>
 </html>
