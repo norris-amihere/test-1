@@ -109,10 +109,25 @@
     function yesClicked() {
       card.innerHTML = `
         <h1>Yay!!! 🥰❤️<br>Happy Valentine’s Day</h1>
-        <img src="us.jpg" alt="Us together">
+        <img src="us1.jpg" alt="Us together">
       `;
     }
   </script>
+<script>
+  const heartCount = 25;
+
+  for (let i = 0; i < heartCount; i++) {
+    const heart = document.createElement("div");
+    heart.textContent = "❤️";
+    heart.style.position = "absolute";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.bottom = "-20px";
+    heart.style.fontSize = Math.random() * 20 + 14 + "px";
+    heart.style.opacity = Math.random();
+    heart.style.animation = `floatUp ${Math.random() * 5 + 6}s linear infinite`;
+    document.body.appendChild(heart);
+  }
+</script>
 
 </body>
 </html>
